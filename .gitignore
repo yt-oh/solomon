@@ -1,0 +1,26 @@
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db.meta
+
+# ============ #
+# for others   #
+# ============ #
+/BUILD/
+/code/client/quizdungeon/BUILD_MANUAL/
+/*.Cache
+*.apk
+
+/graphic_resources/
+__ASSETBUNDLE/
+__LATEST/
+/code/client/quizdungeon/Assets/Resources/LocalDB/weight_0.1.1.bytes
+/code/client/quizdungeon/Assets/Resources/LocalDB/weight_0.1.1.bytes.meta
+/unity_project/.vs/unity_project/v15/sqlite3/*.ide
