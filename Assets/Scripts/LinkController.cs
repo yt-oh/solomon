@@ -16,51 +16,91 @@ public class LinkController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKey(KeyCode.W) == true)
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
             Vector3 position = this.transform.position;
-            position.y += Time.deltaTime * speed;
+            position.x -= Mathf.Abs(Time.deltaTime * speed);
+            position.y += Mathf.Abs(Time.deltaTime * speed);
             this.transform.position = position;
-            Debug.Log("character up");
-        }
+            Debug.Log("character left/up");
 
-        if (Input.GetKey(KeyCode.S) == true)
+        }
+        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
         {
             Vector3 position = this.transform.position;
-            position.y -= Time.deltaTime * speed;
+            position.x -= Mathf.Abs(Time.deltaTime * speed);
+            position.y -= Mathf.Abs(Time.deltaTime * speed);
             this.transform.position = position;
-            Debug.Log("character down");
-        }
+            Debug.Log("character left/down");
 
-        if (Input.GetKey(KeyCode.A) == true)
+        }
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         {
             Vector3 position = this.transform.position;
-            position.x -= Time.deltaTime * speed;
+            position.x += Mathf.Abs(Time.deltaTime * speed);
+            position.y += Mathf.Abs(Time.deltaTime * speed);
             this.transform.position = position;
-            Debug.Log("character left");
-        }
+            Debug.Log("character right/up");
 
-        if (Input.GetKey(KeyCode.D) == true)
+        }
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
             Vector3 position = this.transform.position;
-            position.x += Time.deltaTime * speed;
+            position.x += Mathf.Abs(Time.deltaTime * speed);
+            position.y -= Mathf.Abs(Time.deltaTime * speed);
             this.transform.position = position;
-            Debug.Log("character right");
+            Debug.Log("character right/down");
+
         }
+        else
+        {   
+            if (Input.GetKey(KeyCode.W) == true)
+            {
+                Vector3 position = this.transform.position;
+                position.y += Time.deltaTime * speed;
+                this.transform.position = position;
+                Debug.Log("character up");
+            }
+
+            if (Input.GetKey(KeyCode.S) == true)
+            {
+                Vector3 position = this.transform.position;
+                position.y -= Time.deltaTime * speed;
+                this.transform.position = position;
+                Debug.Log("character down");
+            }
+
+            if (Input.GetKey(KeyCode.A) == true)
+            {
+                Vector3 position = this.transform.position;
+                position.x -= Time.deltaTime * speed;
+                this.transform.position = position;
+                Debug.Log("character left");
+            }
+
+            if (Input.GetKey(KeyCode.D) == true)
+            {
+                Vector3 position = this.transform.position;
+                position.x += Time.deltaTime * speed;
+                this.transform.position = position;
+                Debug.Log("character right");
+            }
 
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            Vector3 rotate = this.transform.eulerAngles;
-            rotate.z += Time.deltaTime * rotateSpeed;
-            this.transform.eulerAngles = rotate;
-        }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                Vector3 rotate = this.transform.eulerAngles;
+                rotate.z += Time.deltaTime * rotateSpeed;
+                this.transform.eulerAngles = rotate;
+            }
 
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            Vector3 rotate = this.transform.eulerAngles;
-            rotate.z -= Time.deltaTime * rotateSpeed;
-            this.transform.eulerAngles = rotate;
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                Vector3 rotate = this.transform.eulerAngles;
+                rotate.z -= Time.deltaTime * rotateSpeed;
+                this.transform.eulerAngles = rotate;
+            }
         }
-    }
+   }
 }
