@@ -1,106 +1,150 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LinkController : MonoBehaviour {
+namespace Assets.Scripts
+{
+    [DisallowMultipleComponent]
+    public class LinkController : MonoBehaviour
+    {
 
-    private float speed = 1f;
-    private float rotateSpeed = 360f;
+        private readonly float speed = 1f;
+        private readonly float rotateSpeed = 360f;
+        private Animator _animator;
 
-    // Use this for initialization
-    void Start () {
+        public GameObject MissilePrefab;
 
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        // Use this for initialization
+        private void Start()
         {
-            Vector3 position = this.transform.position;
-            position.x -= Mathf.Abs(Time.deltaTime * speed);
-            position.y += Mathf.Abs(Time.deltaTime * speed);
-            this.transform.position = position;
-            Debug.Log("character left/up");
 
+            _animator = GetComponent<Animator>();
+            _animator.Play("Player_Down_Idle");
         }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+
+        private void OnCollisionEnter2D(Collision2D coll)
         {
-            Vector3 position = this.transform.position;
-            position.x -= Mathf.Abs(Time.deltaTime * speed);
-            position.y -= Mathf.Abs(Time.deltaTime * speed);
-            this.transform.position = position;
-            Debug.Log("character left/down");
-
+            if (coll.gameObject.name == "Monster")
+            {
+                //Destroy(gameObject);
+                Debug.Log("damaged player!!");
+            }
+            //Debug.Log(coll.gameObject.name);
         }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
-        {
-            Vector3 position = this.transform.position;
-            position.x += Mathf.Abs(Time.deltaTime * speed);
-            position.y += Mathf.Abs(Time.deltaTime * speed);
-            this.transform.position = position;
-            Debug.Log("character right/up");
 
-        }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
-        {
-            Vector3 position = this.transform.position;
-            position.x += Mathf.Abs(Time.deltaTime * speed);
-            position.y -= Mathf.Abs(Time.deltaTime * speed);
-            this.transform.position = position;
-            Debug.Log("character right/down");
+        // Update is called once per frame
+        private void Update () {
 
-        }
-        else
-        {   
-            if (Input.GetKey(KeyCode.W) == true)
+
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
             {
                 Vector3 position = this.transform.position;
-                position.y += Time.deltaTime * speed;
+                position.x -= Mathf.Abs(Time.deltaTime * speed);
+                position.y += Mathf.Abs(Time.deltaTime * speed);
                 this.transform.position = position;
-                Debug.Log("character up");
-            }
+                Debug.Log("character left/up");
 
-            if (Input.GetKey(KeyCode.S) == true)
+            }
+            else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
             {
                 Vector3 position = this.transform.position;
-                position.y -= Time.deltaTime * speed;
+                position.x -= Mathf.Abs(Time.deltaTime * speed);
+                position.y -= Mathf.Abs(Time.deltaTime * speed);
                 this.transform.position = position;
-                Debug.Log("character down");
-            }
+                Debug.Log("character left/down");
 
-            if (Input.GetKey(KeyCode.A) == true)
+            }
+            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
             {
                 Vector3 position = this.transform.position;
-                position.x -= Time.deltaTime * speed;
+                position.x += Mathf.Abs(Time.deltaTime * speed);
+                position.y += Mathf.Abs(Time.deltaTime * speed);
                 this.transform.position = position;
-                Debug.Log("character left");
-            }
+                Debug.Log("character right/up");
 
-            if (Input.GetKey(KeyCode.D) == true)
+            }
+            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
             {
                 Vector3 position = this.transform.position;
-                position.x += Time.deltaTime * speed;
+                position.x += Mathf.Abs(Time.deltaTime * speed);
+                position.y -= Mathf.Abs(Time.deltaTime * speed);
                 this.transform.position = position;
-                Debug.Log("character right");
+                Debug.Log("character right/down");
+
             }
+            else
+            {   
+                if (Input.GetKey(KeyCode.W) == true)
+                {
+                    Vector3 position = this.transform.position;
+                    position.y += Time.deltaTime * speed;
+                    this.transform.position = position;
+                    _animator.Play("Player_Up_Walk");
+                    Debug.Log("character up");
+                }
+                else if (Input.GetKeyUp(KeyCode.W) == true)
+                {
+                    _animator.Play("Player_Up_Idle");
+                }
 
+                if (Input.GetKey(KeyCode.S) == true)
+                {
+                    Vector3 position = this.transform.position;
+                    position.y -= Time.deltaTime * speed;
+                    this.transform.position = position;
+                    _animator.Play("Player_Down_Walk");
+                    Debug.Log("character down");
+                }
+                else if (Input.GetKeyUp(KeyCode.S) == true)
+                {
+                    _animator.Play("Player_Down_Idle");
+                }
 
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Vector3 rotate = this.transform.eulerAngles;
-                rotate.z += Time.deltaTime * rotateSpeed;
-                this.transform.eulerAngles = rotate;
-            }
+                if (Input.GetKey(KeyCode.A) == true)
+                {
+                    Vector3 position = this.transform.position;
+                    position.x -= Time.deltaTime * speed;
+                    this.transform.position = position;
+                    _animator.Play("Player_Left_Walk");
+                    Debug.Log("character left");
+                }
+                else if (Input.GetKeyUp(KeyCode.A) == true)
+                {
+                    _animator.Play("Player_Left_Idle");
+                }
 
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Vector3 rotate = this.transform.eulerAngles;
-                rotate.z -= Time.deltaTime * rotateSpeed;
-                this.transform.eulerAngles = rotate;
+                if (Input.GetKey(KeyCode.D) == true)
+                {
+                    Vector3 position = this.transform.position;
+                    position.x += Time.deltaTime * speed;
+                    this.transform.position = position;
+                    _animator.Play("Player_Right_Walk");
+                    Debug.Log("character right");
+                }
+                else if (Input.GetKeyUp(KeyCode.D) == true)
+                {
+                    _animator.Play("Player_Right_Idle");
+                }
+
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    GameObject missileObj = Instantiate<GameObject>(MissilePrefab , this.transform.position , Quaternion.Euler(0f,0f,0f));
+                    missileObj.SetActive(true);
+
+                }
+
+                //                if (Input.GetKey(KeyCode.LeftArrow))
+                //                {
+                //                    Vector3 rotate = this.transform.eulerAngles;
+                //                    rotate.z += Time.deltaTime * rotateSpeed;
+                //                    this.transform.eulerAngles = rotate;
+                //                }
+                //
+                //                if (Input.GetKey(KeyCode.RightArrow))
+                //                {
+                //                    Vector3 rotate = this.transform.eulerAngles;
+                //                    rotate.z -= Time.deltaTime * rotateSpeed;
+                //                    this.transform.eulerAngles = rotate;
+                //                }
             }
         }
-   }
+    }
 }
